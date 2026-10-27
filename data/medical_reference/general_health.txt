@@ -1,0 +1,26 @@
+
+Document: General Health and Medical Safety
+Source type: Educational demonstration sample
+Purpose: Testing document loading and retrieval preparation
+
+Topic: Fever
+Fever is a rise in body temperature and can occur for many reasons.
+Symptoms and their significance depend on the person's age, medical
+history, other symptoms, and the duration of illness. A healthcare
+professional can assess persistent or concerning symptoms.
+
+Topic: Dehydration
+Dehydration occurs when the body loses more fluid than it takes in.
+Possible signs include thirst, dry mouth, and reduced urination.
+Severe symptoms, confusion, fainting, or inability to keep fluids down
+may require urgent medical assessment.
+
+Topic: Emergency Warning Signs
+Difficulty breathing, severe chest pain, sudden weakness, new confusion,
+or loss of consciousness can indicate a medical emergency. Seek
+emergency medical assistance rather than relying on an AI chatbot.
+
+Topic: Professional Medical Advice
+An online information tool cannot confirm a diagnosis. Users should
+consult qualified healthcare professionals for individual assessment.
+The urgency of care depends on the symptoms and clinical circumstances.
