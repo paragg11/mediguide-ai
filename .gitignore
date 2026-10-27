@@ -1,0 +1,20 @@
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Secrets
+.env
+.env.*
+
+# Generated vector database
+chroma_db/
+
+# Private data
+data/private/
+
+# OS files
+.DS_Store
