@@ -51,3 +51,7 @@ python -m unittest discover -v
 
 ## Limitations and Safety
 This is a learning and portfolio prototype, not a clinically validated medical system. It does not diagnose conditions or replace a qualified healthcare professional. Emergency phrase matching is rule-based and may miss emergencies or flag hypothetical/negated phrases. The specialist lookup is not connected to a live provider directory and does not return verified doctors. Reference content requires appropriate review before any real-world clinical use.
+
+## Demo
+
+![MediGuide AI application screenshot](screenshots/mediguide-demo.png)
