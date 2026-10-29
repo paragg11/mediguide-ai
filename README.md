@@ -1,33 +1,53 @@
+# MediGuide AI — Healthcare Guidance Assistant
 
-# MediGuide AI
+## Overview
+MediGuide AI is an educational healthcare guidance prototype that uses Retrieval-Augmented Generation (RAG) to answer general health-information questions from a small local reference collection.
 
-An educational healthcare guidance assistant powered by Generative AI.
+## Features
+- Document loading and text chunking
+- Semantic retrieval using Sentence Transformers and ChromaDB
+- Local language-model responses using Ollama and Mistral
+- Emergency-keyword warning checks before generating an answer
+- Specialist-category identification prototype
+- Streamlit web interface
+- Automated tests for core logic and safety behavior
 
-## Objectives
-- Retrieve relevant information from medical reference documents.
-- Build a Retrieval-Augmented Generation (RAG) pipeline.
-- Generate grounded responses with source references.
-- Explore LangChain tool calling.
-- Provide a simple Streamlit interface.
+## Architecture
+1. Load reference documents from `data/medical_reference/`.
+2. Split documents into overlapping text chunks.
+3. Generate embeddings and store them in ChromaDB.
+4. Retrieve relevant passages for a user's question.
+5. Pass the question and retrieved context to the local language model.
+6. Check configured emergency phrases before retrieval and generation.
+7. Display the response and available source filenames in Streamlit.
 
-## Technology Stack
-- Python
-- LangChain
-- ChromaDB
-- Ollama
-- Streamlit
+## Tech Stack
+Python, LangChain, Sentence Transformers, ChromaDB, Ollama, Mistral, Streamlit, and unittest.
 
-## Project Progress
-- [x] Python environment setup
-- [x] Initial application entry point
-- [ ] Medical knowledge base
-- [ ] Embeddings and vector search
-- [ ] RAG pipeline
-- [ ] LLM integration
-- [ ] Safety checks
-- [ ] Streamlit UI
-- [ ] Testing
+## Setup
+Create and activate a Python virtual environment, install the dependencies listed in `requirements.txt`, and ensure Ollama is installed and the required model has been downloaded.
 
-## Safety Notice
-This is an educational prototype, not a medical diagnostic tool.
-It does not replace professional medical care.
+Example on Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+ollama pull mistral
+```
+
+## Run
+From the project root:
+
+```bash
+streamlit run app.py
+```
+
+## Run Tests
+
+```bash
+python -m unittest discover -v
+```
+
+## Limitations and Safety
+This is a learning and portfolio prototype, not a clinically validated medical system. It does not diagnose conditions or replace a qualified healthcare professional. Emergency phrase matching is rule-based and may miss emergencies or flag hypothetical/negated phrases. The specialist lookup is not connected to a live provider directory and does not return verified doctors. Reference content requires appropriate review before any real-world clinical use.
