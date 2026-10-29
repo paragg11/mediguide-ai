@@ -8,7 +8,7 @@ from src.vector_store import build_vector_store, search_knowledge_base
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
-
+from src.safety import check_emergency
 
 # Configure the local language model.
 llm = ChatOllama(
@@ -43,9 +43,31 @@ Provide a clear, cautious answer in plain language.
 )
 
 
-def answer_question(question, collection, embedding_model):
-    """Retrieve evidence and generate a grounded response."""
 
+def answer_question(question, collection, embedding_model):
+    """Check safety, retrieve evidence, and generate an answer."""
+
+    # Step 1: Reject empty input.
+    question = question.strip()
+
+    if not question:
+        return {
+            "answer": "Please enter a question.",
+            "sources": [],
+            "emergency_detected": False,
+        }
+
+    # Step 2: Check for configured emergency warning phrases.
+    safety_result = check_emergency(question)
+
+    if safety_result["emergency_detected"]:
+        return {
+            "answer": safety_result["message"],
+            "sources": [],
+            "emergency_detected": True,
+        }
+
+    # Step 3: Retrieve relevant medical reference passages.
     matches = search_knowledge_base(
         question,
         collection,
@@ -56,20 +78,22 @@ def answer_question(question, collection, embedding_model):
     if not matches:
         return {
             "answer": (
-                "I could not find relevant information in the "
+                "I couldn't find relevant information in the "
                 "available reference documents. Please consult "
                 "a qualified healthcare professional."
             ),
             "sources": [],
+            "emergency_detected": False,
         }
 
-    # Prepare the retrieved passages for the prompt.
+    # Step 4: Prepare retrieved passages as context.
     context = "\n\n".join(
         match["text"] for match in matches
     )
 
-    # Send the question and evidence to the language model.
+    # Step 5: Generate an answer using the retrieved context.
     chain = prompt | llm
+
     response = chain.invoke(
         {
             "context": context,
@@ -77,16 +101,20 @@ def answer_question(question, collection, embedding_model):
         }
     )
 
+    # Step 6: Collect source filenames.
     sources = list(
         dict.fromkeys(
-            match["metadata"]["source"] for match in matches
+            match["metadata"]["source"]
+            for match in matches
         )
     )
 
     return {
         "answer": response.content,
         "sources": sources,
+        "emergency_detected": False,
     }
+
 
 
 def main():
